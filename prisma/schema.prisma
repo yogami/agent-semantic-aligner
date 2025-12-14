@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model VocabularyMapping {
+  id             String   @id @default(cuid())
+  sourceVocab    String   @map("source_vocab")
+  targetVocab    String   @map("target_vocab")
+  sourceTerm     String   @map("source_term")
+  targetTerm     String   @map("target_term")
+  confidence     Float    @default(0.0)
+  usageCount     Int      @default(0) @map("usage_count")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@unique([sourceVocab, targetVocab, sourceTerm])
+  @@map("vocabulary_mappings")
+}
