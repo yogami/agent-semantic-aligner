@@ -13,12 +13,23 @@ export class OpenAITranslationService implements ITranslationService {
         });
     }
 
+    private isMockMode(): boolean {
+        return this.openai.apiKey?.startsWith('mock-') ?? false;
+    }
+
     async translateTerm(
         term: string,
         sourceVocab: string,
         targetVocab: string,
         context?: string
     ): Promise<{ translatedTerm: string; confidence: number }> {
+        if (this.isMockMode()) {
+            return {
+                translatedTerm: `[MOCK] ${term} -> ${targetVocab}`,
+                confidence: 0.9,
+            };
+        }
+
         const prompt = `You are a semantic translation expert. Translate the following term from the "${sourceVocab}" vocabulary/ontology to the "${targetVocab}" vocabulary/ontology.
 
 Term to translate: "${term}"
@@ -50,6 +61,10 @@ Respond in JSON format only:
     }
 
     async extractTerms(message: string, vocabulary: string): Promise<string[]> {
+        if (this.isMockMode()) {
+            return ['mock-term-1', 'mock-term-2'];
+        }
+
         const prompt = `You are a semantic analysis expert. Extract domain-specific terms from the following message that belong to the "${vocabulary}" vocabulary/ontology.
 
 Message: "${message}"

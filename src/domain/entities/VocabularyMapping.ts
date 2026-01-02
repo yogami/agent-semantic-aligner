@@ -34,4 +34,12 @@ export interface TranslationResult {
     mappingsUsed: VocabularyMapping[];
     newMappingsCreated: VocabularyMapping[];
     overallConfidence: number;
+    zkProof?: {
+        proof: string;
+        publicSignals: string[];
+        semanticDistanceValid: boolean;
+        sourceHash: string;
+        targetHash: string;
+        proofSizeBytes: number;
+    };
 }
