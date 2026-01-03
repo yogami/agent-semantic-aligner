@@ -1,5 +1,5 @@
-import { IVocabularyRepository } from '../../domain/interfaces/IVocabularyRepository';
-import { ITranslationService } from '../../domain/interfaces/ITranslationService';
+import { IVocabularyRepository } from '../../domain/ports/IVocabularyRepository';
+import { ITranslationService } from '../../domain/ports/ITranslationService';
 import {
     TranslationRequest,
     TranslationResult,

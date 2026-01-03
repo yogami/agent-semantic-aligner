@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/infrastructure/db';
 import { PrismaVocabularyRepository } from '@/infrastructure/repositories/PrismaVocabularyRepository';
 import { OpenAITranslationService } from '@/infrastructure/services/OpenAITranslationService';
-import { TranslateMessage } from '@/application/usecases/TranslateMessage';
-import { TranslationRequest } from '@/domain/entities/VocabularyMapping';
+import { TranslateMessage } from '@/lib/semantic-aligner/application/usecases/TranslateMessage';
+import { TranslationRequest } from '@/lib/semantic-aligner/domain/entities/VocabularyMapping';
 import { zkSemanticProofGenerator } from '@/infrastructure/services/ZKSemanticProofGenerator';
 
 interface ExtendedTranslationRequest extends TranslationRequest {

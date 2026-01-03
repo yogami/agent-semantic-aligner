@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/infrastructure/db';
 import { PrismaVocabularyRepository } from '@/infrastructure/repositories/PrismaVocabularyRepository';
-import { CreateMappingInput } from '@/domain/entities/VocabularyMapping';
+import { CreateMappingInput } from '@/lib/semantic-aligner/domain/entities/VocabularyMapping';
 
 const vocabularyRepo = new PrismaVocabularyRepository(prisma);
 

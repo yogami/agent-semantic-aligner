@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { ITranslationService } from '../../domain/interfaces/ITranslationService';
+import { ITranslationService } from '../../lib/semantic-aligner/domain/ports/ITranslationService';
 
 /**
  * OpenAI implementation of the TranslationService.

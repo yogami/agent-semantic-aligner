@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { TranslateMessage } from '../../application/usecases/TranslateMessage';
-import { IVocabularyRepository } from '../../domain/interfaces/IVocabularyRepository';
-import { ITranslationService } from '../../domain/interfaces/ITranslationService';
-import { VocabularyMapping } from '../../domain/entities/VocabularyMapping';
+import { TranslateMessage } from '../../lib/semantic-aligner/application/usecases/TranslateMessage';
+import { IVocabularyRepository } from '../../lib/semantic-aligner/domain/ports/IVocabularyRepository';
+import { ITranslationService } from '../../lib/semantic-aligner/domain/ports/ITranslationService';
+import { VocabularyMapping } from '../../lib/semantic-aligner/domain/entities/VocabularyMapping';
 
 describe('TranslateMessage Use Case', () => {
     let mockVocabularyRepo: IVocabularyRepository;

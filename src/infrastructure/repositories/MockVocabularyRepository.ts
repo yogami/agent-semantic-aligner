@@ -1,8 +1,8 @@
-import { IVocabularyRepository } from '../../domain/interfaces/IVocabularyRepository';
+import { IVocabularyRepository } from '../../lib/semantic-aligner/domain/ports/IVocabularyRepository';
 import {
     VocabularyMapping,
     CreateMappingInput,
-} from '../../domain/entities/VocabularyMapping';
+} from '../../lib/semantic-aligner/domain/entities/VocabularyMapping';
 
 /**
  * Mock implementation of the VocabularyRepository for testing.
