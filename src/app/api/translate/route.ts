@@ -33,7 +33,42 @@ export async function POST(request: NextRequest) {
             : new PrismaVocabularyRepository(prisma);
 
         const translationService = process.env.MOCK_LLM === 'true'
-            ? { translate: async () => ({ translatedMessage: "MOCKED TRANSLATION", overallConfidence: 0.99, mappings: [] }) } as any
+            ? {
+                // Mock term extraction - finds known medical/business terms
+                extractTerms: async (message: string, _vocab: string): Promise<string[]> => {
+                    const knownTerms = ['hypertension', 'tachycardia', 'refund', 'customer', 'request'];
+                    const foundTerms = knownTerms.filter(term => message.toLowerCase().includes(term));
+                    // If no known terms found, extract first noun-like word for general translation
+                    if (foundTerms.length === 0) {
+                        const words = message.split(/\s+/).filter(w => w.length > 4);
+                        return words.length > 0 ? [words[0].toLowerCase()] : [];
+                    }
+                    return foundTerms;
+                },
+                // Mock term translation with domain-aware confidence
+                translateTerm: async (term: string, sourceVocab: string, targetVocab: string, _context: string) => {
+                    const mockMappings: Record<string, string> = {
+                        'hypertension': 'high blood pressure',
+                        'tachycardia': 'fast heart rate',
+                        'refund': 'reversal',
+                        'customer': 'patient',
+                        'request': 'inquiry',
+                    };
+                    // Domain mismatch detection - return low confidence for incompatible domains
+                    const incompatiblePairs = [
+                        ['physics', 'cooking'],
+                        ['quantum', 'culinary'],
+                    ];
+                    const isIncompatible = incompatiblePairs.some(
+                        ([a, b]) => (sourceVocab.includes(a) && targetVocab.includes(b)) ||
+                            (sourceVocab.includes(b) && targetVocab.includes(a))
+                    );
+                    return {
+                        translatedTerm: mockMappings[term.toLowerCase()] || term,
+                        confidence: isIncompatible ? 0.3 : 0.95, // Low confidence for domain mismatch
+                    };
+                },
+            } as any
             : new OpenAITranslationService();
 
         const translateUseCase = new TranslateMessage(vocabularyRepo, translationService);

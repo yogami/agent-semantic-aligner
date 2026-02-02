@@ -64,7 +64,7 @@ test.describe('Agent Semantic Aligner', () => {
         await expect(page.getByText(/Translating/i)).toBeVisible();
 
         // Wait for result
-        await expect(page.getByText(/high blood pressure/i)).toBeVisible({ timeout: 10000 });
+        await expect(page.getByText(/high blood pressure/i).first()).toBeVisible({ timeout: 10000 });
     });
 
     test('displays translation result with mappings', async ({ page }) => {
@@ -93,7 +93,7 @@ test.describe('Agent Semantic Aligner', () => {
         await translateButton.click();
 
         // Check translated message appears
-        await expect(page.getByText('fast heart rate')).toBeVisible({ timeout: 10000 });
+        await expect(page.getByText('fast heart rate').first()).toBeVisible({ timeout: 10000 });
 
         // Check confidence is shown
         await expect(page.getByText(/90\.0%/)).toBeVisible();
