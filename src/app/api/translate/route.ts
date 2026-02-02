@@ -32,7 +32,10 @@ export async function POST(request: NextRequest) {
             ? new MockVocabularyRepository()
             : new PrismaVocabularyRepository(prisma);
 
-        const translationService = new OpenAITranslationService();
+        const translationService = process.env.MOCK_LLM === 'true'
+            ? { translate: async () => ({ translatedMessage: "MOCKED TRANSLATION", overallConfidence: 0.99, mappings: [] }) } as any
+            : new OpenAITranslationService();
+
         const translateUseCase = new TranslateMessage(vocabularyRepo, translationService);
 
         const result = await translateUseCase.execute(body);

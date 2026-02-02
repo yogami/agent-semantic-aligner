@@ -8,7 +8,7 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: 'html',
     use: {
-        baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000',
+        baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3002',
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
     },
@@ -21,8 +21,8 @@ export default defineConfig({
     webServer: process.env.PLAYWRIGHT_BASE_URL
         ? undefined
         : {
-            command: 'npm run dev',
-            url: 'http://localhost:3000',
+            command: 'PORT=3002 MOCK_DB=true MOCK_LLM=true npm run dev',
+            url: 'http://localhost:3002',
             reuseExistingServer: !process.env.CI,
             timeout: 120 * 1000,
         },
